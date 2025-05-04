@@ -1,6 +1,9 @@
 package co.sumit.patient.service.mapper;
 
+import java.time.LocalDate;
+
 import co.sumit.patient.model.Patient;
+import co.sumit.patient.service.dto.PatientRequestDTO;
 import co.sumit.patient.service.dto.PatientResponseDTO;
 
 public class PatientMapper {
@@ -15,4 +18,15 @@ public class PatientMapper {
 		
 		return patientResponseDTO;
 	}
+	
+	public static Patient toEntityModel(PatientRequestDTO patientRequestDTO) {
+		Patient patient = new Patient();
+		patient.setName(patientRequestDTO.getName());
+		patient.setAddress(patientRequestDTO.getAddress());
+		patient.setEmail(patientRequestDTO.getEmail());
+		patient.setDateOfBirth(LocalDate.parse(patientRequestDTO.getDateOfBirth()));
+		patient.setRegisteredDate(LocalDate.parse(patientRequestDTO.getRegisteredDate()));
+		return patient;
+	}
+	
 }

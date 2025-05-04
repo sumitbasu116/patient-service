@@ -1,1 +1,10 @@
-http://localhost:4000/patients
+GET http://localhost:4000/patients
+
+POST http://localhost:4000/patients
+{
+  "name": "Amit Basu",
+  "email": "amit_basu@example.com",
+  "address": "123 main street22",
+  "dateOfBirth": "1995-09-09",
+  "registeredDate": "2024-11-28"
+}

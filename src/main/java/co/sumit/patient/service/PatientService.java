@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import co.sumit.patient.exception.EmailAlreadyExistsException;
 import co.sumit.patient.model.Patient;
 import co.sumit.patient.repository.PatientRepository;
+import co.sumit.patient.service.dto.PatientRequestDTO;
 import co.sumit.patient.service.dto.PatientResponseDTO;
 import co.sumit.patient.service.mapper.PatientMapper;
 
@@ -24,5 +26,14 @@ public class PatientService {
 		List<PatientResponseDTO> resultList = patients.stream().map(patient->PatientMapper.toDTO(patient)).toList();
 		
 		return resultList;
+	}
+	
+	public PatientResponseDTO createPatient(PatientRequestDTO patientRequestDTO) {
+		if(patientRepository.existsByEmail(patientRequestDTO.getEmail())) {
+			throw new EmailAlreadyExistsException("A Patient with this email is already exists "+
+					patientRequestDTO.getEmail());
+		}
+		Patient newPatient = patientRepository.save(PatientMapper.toEntityModel(patientRequestDTO));
+		return PatientMapper.toDTO(newPatient);
 	}
 }
